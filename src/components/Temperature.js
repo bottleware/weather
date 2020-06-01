@@ -13,7 +13,7 @@ const Temperature = props => {
     const tempSymbol = (props.unit === true ? 'F' : 'C');
 
     return (
-        <div className="info">
+        <div>
             <p>Temperature: {kToTemp(props.weather.main.temp)}°{tempSymbol}</p>
             <p>Max temperature: {kToTemp(props.weather.main.temp_max)}°{tempSymbol}</p>
             <p>Min temperature: {kToTemp(props.weather.main.temp_min)}°{tempSymbol}</p>

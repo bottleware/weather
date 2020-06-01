@@ -52,16 +52,12 @@ function Library() {
                     setCountry={setCountry}
         />
         <button type="submit" 
-                className="submit" 
                 onClick={() => clickSearch()}
         >
                 Search
         </button>
         
-        <label className="switch">
           <input type="checkbox" onClick={() => setTempUnit(!tempUnit)}/>
-          <span className="slider round"></span>
-        </label>
       </div>
       <WeatherDisplay weather={weatherData} unit={tempUnit}/>
     </div>

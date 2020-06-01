@@ -16,7 +16,7 @@ const SearchForm = props => {
 
     return (
         <div id="formDiv">
-            <form className="searchForm">
+            <form>
                 <input 
                     type="text"
                     placeholder="City" id="city"
@@ -28,14 +28,12 @@ const SearchForm = props => {
                     type="text" 
                     id="state"
                     placeholder="State"
-                    className="formInput"
                     onChange={(e) => updateState(e.target.value)}/>
 
                 <input 
                     type="text"
                     placeholder="Country" 
                     id="country"
-                    className="formInput"
                     onChange={(e) => updateCountry(e.target.value)}/>
             </form>
         </div>
