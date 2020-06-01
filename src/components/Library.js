@@ -48,7 +48,6 @@ function Library() {
     <div className="App ml-5">
       <div id="header" 
         className="flex justify-start"
-        // className="max-w-4xl mx-auto py-2"
         >
         <SearchForm 
           setCity={setCity}
@@ -76,13 +75,6 @@ function Library() {
               C 
             </button>
         </div>
-        {/* <label>
-          <input
-            type="checkbox"
-            onClick={() => setTempUnit(!tempUnit)}
-          />
-          {tempUnit === true ? 'F' : 'C'}
-        </label> */}
       </div>
       <WeatherDisplay weather={weatherData} unit={tempUnit}/>
     </div>
