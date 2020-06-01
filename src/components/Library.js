@@ -5,13 +5,13 @@ import key from '../key';
 
 function Library() {
 
-  // let weatherData;
   let [weatherData, setWeatherData] = useState();
-  // let [searchInput, setSearchInput] = useState();
   let [city, setCity] = useState();
   let [state, setState] = useState();
   let [country, setCountry] = useState();
   let [tempUnit, setTempUnit] = useState(false);
+
+  const selectClass = "bg-gray-500 hover:bg-black-700 text-white font-bold py-2 px-4 rounded w-100 mr-10";
 
   const weather = {
     city,
@@ -45,23 +45,36 @@ function Library() {
   }
 
   return (
-    <div className="App">
-      <div id="header">
-        <SearchForm setCity={setCity}
-                    setState={setState}
-                    setCountry={setCountry}
+    <div className="App ml-5">
+      <div id="header" 
+        className="flex justify-start"
+        >
+        <SearchForm 
+          setCity={setCity}
+          setState={setState}
+          setCountry={setCountry}
         />
-        <button type="submit" 
-                className="submit" 
-                onClick={() => clickSearch()}
+        <button 
+          type="submit"
+          className="bg-gray-500 hover:bg-black-700 text-white font-bold py-2 px-4 rounded w-100 mr-10"
+          onClick={() => clickSearch()}
         >
                 Search
-        </button>
-        
-        <label className="switch">
-          <input type="checkbox" onClick={() => setTempUnit(!tempUnit)}/>
-          <span className="slider round"></span>
-        </label>
+        </button>  
+        <div class="inline-flex">
+            <button
+              class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+              onClick={() => setTempUnit(true)}
+            >
+              F
+            </button>
+            <button
+              class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
+              onClick={() => setTempUnit(false)}
+            >
+              C 
+            </button>
+        </div>
       </div>
       <WeatherDisplay weather={weatherData} unit={tempUnit}/>
     </div>
