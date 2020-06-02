@@ -36,7 +36,8 @@ function Library() {
     }
   };
 
-  const clickSearch = () => {
+  const clickSearch = (e) => {
+    e.preventDefault();
     getWeather(weather);
   };
 
@@ -50,14 +51,15 @@ function Library() {
           setCity={setCity}
           setState={setState}
           setCountry={setCountry}
+          search={clickSearch}
         />
-        <button
+        {/* <button
           type="submit"
           className="bg-gray-500 hover:bg-black-700 text-white font-bold py-2 px-4 rounded w-100 mr-10"
           onClick={() => clickSearch()}
         >
           Search
-        </button>
+        </button> */}
         <div className="inline-flex">
           <button
             className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"

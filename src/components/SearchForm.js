@@ -42,6 +42,14 @@ const SearchForm = (props) => {
           className={inputClass()}
           onChange={(e) => updateCountry(e.target.value)}
         />
+
+        <button
+          type="submit"
+          className="bg-gray-500 hover:bg-black-700 text-white font-bold py-2 px-4 rounded w-100 mr-10"
+          onClick={(e) => props.search(e)}
+        >
+          Search
+        </button>
       </form>
     </div>
   );
