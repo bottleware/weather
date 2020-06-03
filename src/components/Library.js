@@ -24,11 +24,11 @@ function Library() {
         throw new Error('Need a city..');
       }
       if (search.state && search.country) {
-        response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search.city},${search.state},${search.country}&appid=${key}`);
+        response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search.city},${search.state},${search.country}&appid=${key}`, {mode: "cors"});
       } else if (search.state) {
-        response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search.city},${search.state}&appid=${key}`);
+        response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search.city},${search.state}&appid=${key}`, {mode: "cors"});
       } else {
-        response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search.city}&appid=${key}`);
+        response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search.city}&appid=${key}`, {mode: "cors"});
       }
 
       setWeatherData(await response.json());
