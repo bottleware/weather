@@ -15,8 +15,8 @@
     "build": "concurrently \"npm run build:css\" \"react-scripts build\" \"npm run postbuild\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build:css": "postcss ./public/tailwind.css -o ./src/index.css",
-    "watch:css": "postcss ./public/tailwind.css -o ./src/index.css -w",
+    "build:css": "postcss ./public/tailwind.css -o ./public/index.css",
+    "watch:css": "postcss ./public/tailwind.css -o ./public/index.css -w",
     "postbuild": "purgecss --css build/static/css/*.css --content build/index.html build/static/js/*.js --output build/static/css"
   },
   "eslintConfig": {
