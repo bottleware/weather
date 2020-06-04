@@ -17,7 +17,7 @@
     "eject": "react-scripts eject",
     "build:css": "postcss ./public/tailwind.css -o ./public/index.css",
     "watch:css": "postcss ./public/tailwind.css -o ./public/index.css -w",
-    "postbuild": "purgecss --css build/static/css/*.css --content build/index.html build/static/js/*.js --output build/static/css"
+    "postbuild": "purgecss --css build/*.css --content build/index.html build/static/js/*.js --output build/static/css"
   },
   "eslintConfig": {
     "extends": "react-app"
