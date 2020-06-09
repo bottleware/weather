@@ -16,40 +16,36 @@ function Library() {
     country,
   };
 
-  const getCurrentLocation = () => {
-    if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(setPosition);
-    }
-  }
-
-  const setPosition = (pos) => {
-    const {latitude, longitude} = pos.coords;
-    getGeoWeather({ latitude, longitude });
-  }
-
   useEffect(() => {
-    console.log("hi");
+    const getCurrentLocation = () => {
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(setPosition);
+      }
+    }
+
+    const setPosition = (pos) => {
+      const {latitude, longitude} = pos.coords;
+      getGeoWeather({ latitude, longitude });
+    }
+
     getCurrentLocation();
-  });
+  }, []);
 
   // search is an object of the form {city, state, country}
   const getWeather = async (search) => {
     let response;
     try {
-      if (search.latitude && search.longitude) {
-        response = await fetch(`api.openweathermap.org/data/2.5/weather?lat=${search.latitude}&lon=${search.longitude}&appid=${key}`);
-      }
-      else if (search.city === "") {
+      if (search.city === "") {
         throw new Error('Need a city..');
       }
       else if (search.state && search.country) {
-        response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search.city},${search.state},${search.country}&appid=${key}`);
+        response = await fetch(`/data/2.5/weather?q=${search.city},${search.state},${search.country}&appid=${key}`);
       }
       else if (search.state) {
-        response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search.city},${search.state}&appid=${key}`);
+        response = await fetch(`/data/2.5/weather?q=${search.city},${search.state}&appid=${key}`);
       }
       else {
-        response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search.city}&appid=${key}`);
+        response = await fetch(`/data/2.5/weather?q=${search.city}&appid=${key}`);
       }
 
       setWeatherData(await response.json());
@@ -58,12 +54,13 @@ function Library() {
     }
   };
 
+  // location is of the type {latitude, longitude}
   const getGeoWeather = async (location) => {
     let response;
     const {latitude, longitude} = location;
     try {
       if (latitude && longitude) {
-        response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`);
+        response = await fetch(`/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`);
       }
       setWeatherData(await response.json());
       } catch (error) {
@@ -78,7 +75,6 @@ function Library() {
 
   return (
     <div className="App ml-5">
-      <button onClick={getCurrentLocation()}/>
       <div
         id="header"
         className="flex justify-start"

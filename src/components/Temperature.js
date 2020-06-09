@@ -10,8 +10,8 @@ const Temperature = (props) => {
 
   // Determines & returns the weather icon
   const weatherIcon = () => {
-    const icon = `https://openweathermap.org/img/wn/${props.weather.weather[0].icon}@2x.png`;
-    const alt = `weather icon, ${props.weather.weather[0].icon}`;
+    const icon = `http://openweathermap.org/img/wn/${props.weather.weather[0].icon}@2x.png`;
+    const alt = `weather icon ${props.weather.weather[0].icon}`;
     const description = props.weather.weather[0].description;
     return {icon, description, alt};
   };
@@ -21,7 +21,7 @@ const Temperature = (props) => {
   return (
     <div>
       <div className="max-w-sm rounded overflow-hidden shadow-lg mt-5">
-        <img src={weatherIcon().icon} alt="Sunset in the mountains"/>
+        <img src={weatherIcon().icon} alt={weatherIcon().alt}/>
         <div className="px-6 pb-4">
           <div className="font-bold text-xl mb-2">{weatherIcon().description}</div>
           <p className="text-gray-700 text-base">
