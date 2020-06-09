@@ -12,12 +12,12 @@
   },
   "scripts": {
     "start": "concurrently \"npm run watch:css\" \"react-scripts start\"",
-    "build": "concurrently \"npm run build:css\" \"react-scripts build\" \"npm run postbuild\"",
+    "build": "npm run build:css && react-scripts build  && npm run postbuild",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build:css": "postcss ./public/tailwind.css -o ./public/index.css",
-    "watch:css": "postcss ./public/tailwind.css -o ./public/index.css -w",
-    "postbuild": "purgecss --css build/*.css --content build/index.html build/static/js/*.js --output build/static/css"
+    "build:css": "postcss ./src/tailwind.css -o ./src/index.css",
+    "watch:css": "postcss ./src/tailwind.css -o ./src/index.css -w",
+    "postbuild": "purgecss --css ./build/*.css --content ./build/index.html ./build/static/js/*.js --output ./build/static/css"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,6 +35,7 @@
     ]
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^2.2.0",
     "autoprefixer": "^9.8.0",
     "concurrently": "^5.2.0",
     "eslint": "^6.8.0",

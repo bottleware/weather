@@ -10,7 +10,7 @@ const Temperature = (props) => {
 
   // Determines & returns the weather icon
   const weatherIcon = () => {
-    const icon = `http://openweathermap.org/img/wn/${props.weather.weather[0].icon}@2x.png`;
+    const icon = `https://openweathermap.org/img/wn/${props.weather.weather[0].icon}@2x.png`;
     const alt = `weather icon ${props.weather.weather[0].icon}`;
     const description = props.weather.weather[0].description;
     return {icon, description, alt};
