@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchForm from './SearchForm';
 import WeatherDisplay from './WeatherDisplay';
 import key from '../key';
@@ -16,23 +16,58 @@ function Library() {
     country,
   };
 
+  const getCurrentLocation = () => {
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(setPosition);
+    }
+  }
+
+  const setPosition = (pos) => {
+    const {latitude, longitude} = pos.coords;
+    getGeoWeather({ latitude, longitude });
+  }
+
+  useEffect(() => {
+    console.log("hi");
+    getCurrentLocation();
+  });
+
   // search is an object of the form {city, state, country}
   const getWeather = async (search) => {
     let response;
     try {
-      if (search.city === "") {
+      if (search.latitude && search.longitude) {
+        response = await fetch(`api.openweathermap.org/data/2.5/weather?lat=${search.latitude}&lon=${search.longitude}&appid=${key}`);
+      }
+      else if (search.city === "") {
         throw new Error('Need a city..');
       }
-      if (search.state && search.country) {
+      else if (search.state && search.country) {
         response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search.city},${search.state},${search.country}&appid=${key}`);
-      } else if (search.state) {
+      }
+      else if (search.state) {
         response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search.city},${search.state}&appid=${key}`);
-      } else {
+      }
+      else {
         response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search.city}&appid=${key}`);
       }
 
       setWeatherData(await response.json());
-    } catch (error) {
+      } catch (error) {
+        console.log(error);
+    }
+  };
+
+  const getGeoWeather = async (location) => {
+    let response;
+    const {latitude, longitude} = location;
+    try {
+      if (latitude && longitude) {
+        response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`);
+      }
+      setWeatherData(await response.json());
+      } catch (error) {
+        console.log(error);
     }
   };
 
@@ -43,6 +78,7 @@ function Library() {
 
   return (
     <div className="App ml-5">
+      <button onClick={getCurrentLocation()}/>
       <div
         id="header"
         className="flex justify-start"
