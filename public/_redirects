@@ -1,1 +1,1 @@
-/data https://api.openweathermap.org/data
+/data/* https://api.openweathermap.org/data/:splat 200
