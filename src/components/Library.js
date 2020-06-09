@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchForm from './SearchForm';
 import WeatherDisplay from './WeatherDisplay';
 import key from '../key';
@@ -16,6 +16,21 @@ function Library() {
     country,
   };
 
+  useEffect(() => {
+    const getCurrentLocation = () => {
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(setPosition);
+      }
+    }
+
+    const setPosition = (pos) => {
+      const {latitude, longitude} = pos.coords;
+      getGeoWeather({ latitude, longitude });
+    }
+
+    getCurrentLocation();
+  }, []);
+
   // search is an object of the form {city, state, country}
   const getWeather = async (search) => {
     let response;
@@ -23,16 +38,33 @@ function Library() {
       if (search.city === "") {
         throw new Error('Need a city..');
       }
-      if (search.state && search.country) {
-        response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search.city},${search.state},${search.country}&appid=${key}`);
-      } else if (search.state) {
-        response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search.city},${search.state}&appid=${key}`);
-      } else {
-        response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search.city}&appid=${key}`);
+      else if (search.state && search.country) {
+        response = await fetch(`/data/2.5/weather?q=${search.city},${search.state},${search.country}&appid=${key}`);
+      }
+      else if (search.state) {
+        response = await fetch(`/data/2.5/weather?q=${search.city},${search.state}&appid=${key}`);
+      }
+      else {
+        response = await fetch(`/data/2.5/weather?q=${search.city}&appid=${key}`);
       }
 
       setWeatherData(await response.json());
-    } catch (error) {
+      } catch (error) {
+        console.log(error);
+    }
+  };
+
+  // location is of the type {latitude, longitude}
+  const getGeoWeather = async (location) => {
+    let response;
+    const {latitude, longitude} = location;
+    try {
+      if (latitude && longitude) {
+        response = await fetch(`/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`);
+      }
+      setWeatherData(await response.json());
+      } catch (error) {
+        console.log(error);
     }
   };
 
