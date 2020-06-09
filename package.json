@@ -43,6 +43,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^2.5.0",
+    "http-proxy-middleware": "^1.0.4",
     "postcss-cli": "^7.1.1",
     "tailwindcss": "^1.4.6"
   }
