@@ -4,14 +4,13 @@ import Message from './Message';
 
 const WeatherDisplay = (props) => {
   if (props.weather && props.weather.cod !== 200) {
-    return <Message message="Error! Location not found. Try being more specific or try another location."/>;
+    return <Message message="Error! Location not found. Try being more specific or try another location." />;
   }
-  else if (props.weather !== undefined) {
-    return <Temperature weather={props.weather} unit={props.unit}/>;
+  if (props.weather !== undefined) {
+    return <Temperature weather={props.weather} unit={props.unit} />;
   }
-  else {
-    return <Message message="Enter a city to see today's weather."/>;
-  }
+
+  return <Message message="Enter a city to see today's weather." />;
 };
 
 export default WeatherDisplay;
