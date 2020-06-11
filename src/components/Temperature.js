@@ -1,22 +1,25 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Temperature = (props) => {
+  const { unit, weather } = props;
+
   const kToTemp = (kelvinTemp) => {
-    if (props.unit === true) {
-      return Math.round(((kelvinTemp - 273.15) * 9 / 5) + 32);
+    if (unit === true) {
+      return Math.round(((kelvinTemp - 273.15) * (9 / 5)) + 32);
     }
     return Math.round(kelvinTemp - 273.15);
   };
 
   // Determines & returns the weather icon
   const weatherIcon = () => {
-    const icon = `https://openweathermap.org/img/wn/${props.weather.weather[0].icon}@2x.png`;
-    const alt = `weather icon ${props.weather.weather[0].icon}`;
-    const { description } = props.weather.weather[0];
+    const icon = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
+    const alt = `weather icon ${weather.weather[0].icon}`;
+    const { description } = weather.weather[0];
     return { icon, description, alt };
   };
 
-  const tempSymbol = (props.unit === true ? 'F' : 'C');
+  const tempSymbol = (unit === true ? 'F' : 'C');
 
   return (
     <div>
@@ -25,7 +28,7 @@ const Temperature = (props) => {
         <div className="px-6 pb-4">
           <div className="font-bold text-xl mb-2">{weatherIcon().description}</div>
           <p className="text-gray-700 text-base">
-            {kToTemp(props.weather.main.temp)}
+            {kToTemp(weather.main.temp)}
             °
             {tempSymbol}
           </p>
@@ -33,6 +36,11 @@ const Temperature = (props) => {
       </div>
     </div>
   );
+};
+
+Temperature.propTypes = {
+  weather: PropTypes.object.isRequired,
+  unit: PropTypes.bool.isRequired,
 };
 
 export default Temperature;
