@@ -87,16 +87,9 @@ function Library() {
           <button
             type="button"
             className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
-            onClick={() => setTempUnit(true)}
+            onClick={() => setTempUnit(!tempUnit)}
           >
-            F
-          </button>
-          <button
-            type="button"
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
-            onClick={() => setTempUnit(false)}
-          >
-            C
+            {tempUnit ? '°F' : '°C'}
           </button>
         </div>
       </div>
