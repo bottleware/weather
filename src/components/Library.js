@@ -3,12 +3,18 @@ import SearchForm from './SearchForm';
 import WeatherDisplay from './WeatherDisplay';
 import key from '../key';
 
+import morning from '../assets/morning.webp';
+import afternoon from '../assets/afternoon.webp';
+import evening from '../assets/evening.webp';
+import night from '../assets/night.webp';
+
 function Library() {
   const [weatherData, setWeatherData] = useState();
   const [city, setCity] = useState();
   const [state, setState] = useState();
   const [country, setCountry] = useState();
   const [tempUnit, setTempUnit] = useState(false);
+  const [background, setBackground] = useState(`url(${evening})`);
 
   const weather = {
     city,
@@ -63,6 +69,7 @@ function Library() {
     };
 
     getCurrentLocation();
+    setBackground(bgTimeColor());
   }, []);
 
 
@@ -73,25 +80,26 @@ function Library() {
 
   const bgTimeColor = () => {
     const time = new Date().getHours();
+    // const time = 22;
     const morningStart = 6;
     const afternoonStart = 12;
     const eveningStart = 17;
 
-    if (time < morningStart) {
-      return 'bg-black bg-opacity-75';
+    if (time < morningStart || time > eveningStart) {
+      return `url(${night})`;
     }
     if (time < afternoonStart) {
-      return 'bg-indigo-400 bg-opacity-75';
+      return `url(${morning})`;
     }
     if (time < eveningStart) {
-      return 'bg-orange-600 bg-opacity-75';
+    return `url(${afternoon})`;
     }
-    return 'bg-yellow-600 bg-opacity-75';
+    return `url(${evening})`;
   };
 
   return (
-    <div className="App mx-1 w-full h-full">
-      <div className={bgTimeColor()}>
+    <div className='App w-full h-full bg-cover' style={{backgroundImage: background}}>
+      <div className='mx-1'>
         <div
           id="header"
           className="flex justify-start"
