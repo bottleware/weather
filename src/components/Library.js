@@ -16,57 +16,55 @@ function Library() {
     country,
   };
 
-  useEffect(() => {
-    const getCurrentLocation = () => {
-      if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(setPosition);
-      }
-    }
-
-    const setPosition = (pos) => {
-      const {latitude, longitude} = pos.coords;
-      getGeoWeather({ latitude, longitude });
-    }
-
-    getCurrentLocation();
-  }, []);
-
   // search is an object of the form {city, state, country}
   const getWeather = async (search) => {
     let response;
     try {
-      if (search.city === "") {
+      if (search.city === '') {
         throw new Error('Need a city..');
-      }
-      else if (search.state && search.country) {
+      } else if (search.state && search.country) {
         response = await fetch(`/data/2.5/weather?q=${search.city},${search.state},${search.country}&appid=${key}`);
-      }
-      else if (search.state) {
+      } else if (search.state) {
         response = await fetch(`/data/2.5/weather?q=${search.city},${search.state}&appid=${key}`);
-      }
-      else {
+      } else {
         response = await fetch(`/data/2.5/weather?q=${search.city}&appid=${key}`);
       }
 
       setWeatherData(await response.json());
-      } catch (error) {
-        console.log(error);
+    } catch (error) {
+      console.log(error);
     }
   };
 
   // location is of the type {latitude, longitude}
   const getGeoWeather = async (location) => {
     let response;
-    const {latitude, longitude} = location;
+    const { latitude, longitude } = location;
     try {
       if (latitude && longitude) {
         response = await fetch(`/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`);
       }
       setWeatherData(await response.json());
-      } catch (error) {
-        console.log(error);
+    } catch (error) {
+      console.log(error);
     }
   };
+
+  useEffect(() => {
+    const setPosition = (pos) => {
+      const { latitude, longitude } = pos.coords;
+      getGeoWeather({ latitude, longitude });
+    };
+
+    const getCurrentLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(setPosition);
+      }
+    };
+
+    getCurrentLocation();
+  }, []);
+
 
   const clickSearch = (e) => {
     e.preventDefault();
@@ -85,29 +83,17 @@ function Library() {
           setCountry={setCountry}
           search={clickSearch}
         />
-        {/* <button
-          type="submit"
-          className="bg-gray-500 hover:bg-black-700 text-white font-bold py-2 px-4 rounded w-100 mr-10"
-          onClick={() => clickSearch()}
-        >
-          Search
-        </button> */}
         <div className="inline-flex">
           <button
+            type="button"
             className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
-            onClick={() => setTempUnit(true)}
+            onClick={() => setTempUnit(!tempUnit)}
           >
-            F
-          </button>
-          <button
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
-            onClick={() => setTempUnit(false)}
-          >
-            C
+            {tempUnit ? '°F' : '°C'}
           </button>
         </div>
       </div>
-      <WeatherDisplay weather={weatherData} unit={tempUnit}/>
+      <WeatherDisplay weather={weatherData} unit={tempUnit} />
     </div>
   );
 }
