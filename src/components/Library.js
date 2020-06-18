@@ -72,10 +72,10 @@ function Library() {
   };
 
   return (
-    <div className="App ml-5">
+    <div className="h-screen pt-64">
       <div
         id="header"
-        className="flex justify-start"
+        className="flex justify-center"
       >
         <SearchForm
           setCity={setCity}
@@ -83,17 +83,17 @@ function Library() {
           setCountry={setCountry}
           search={clickSearch}
         />
-        <div className="inline-flex">
-          <button
-            type="button"
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
-            onClick={() => setTempUnit(!tempUnit)}
-          >
-            {tempUnit ? '°F' : '°C'}
-          </button>
-        </div>
+        <button
+          type="button"
+          className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg"
+          onClick={() => setTempUnit(!tempUnit)}
+        >
+          {tempUnit ? '°F' : '°C'}
+        </button>
       </div>
-      <WeatherDisplay weather={weatherData} unit={tempUnit} />
+      <div className="flex justify-center pt-8">
+        <WeatherDisplay weather={weatherData} unit={tempUnit} />
+      </div>
     </div>
   );
 }

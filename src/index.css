@@ -446,9 +446,8 @@ img {
   border-radius: 0.25rem;
 }
 
-.rounded-l {
-  border-top-left-radius: 0.25rem;
-  border-bottom-left-radius: 0.25rem;
+.rounded-lg {
+  border-radius: 0.5rem;
 }
 
 .border-2 {
@@ -459,16 +458,16 @@ img {
   display: flex;
 }
 
-.inline-flex {
-  display: inline-flex;
-}
-
-.justify-start {
-  justify-content: flex-start;
+.justify-center {
+  justify-content: center;
 }
 
 .font-bold {
   font-weight: 700;
+}
+
+.h-screen {
+  height: 100vh;
 }
 
 .text-base {
@@ -493,10 +492,6 @@ img {
 
 .mt-5 {
   margin-top: 1.25rem;
-}
-
-.ml-5 {
-  margin-left: 1.25rem;
 }
 
 .mr-10 {
@@ -532,6 +527,14 @@ img {
 
 .pb-4 {
   padding-bottom: 1rem;
+}
+
+.pt-8 {
+  padding-top: 2rem;
+}
+
+.pt-64 {
+  padding-top: 16rem;
 }
 
 .shadow-lg {
