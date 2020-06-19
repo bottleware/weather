@@ -90,7 +90,7 @@ function Library() {
     if (searchSecondsUTCOffset === undefined) {
       time = new Date().getHours()
     } else {
-      hoursOffset >= 0 ? time = 24 % (24 - Math.abs(new Date().getUTCHours() + (Math.abs(hoursOffset)))) : time =  (24 - Math.abs(new Date().getUTCHours() - (Math.abs(hoursOffset)))) ;
+      hoursOffset >= 0 ? time = Math.abs(new Date().getUTCHours() + (Math.abs(hoursOffset))) % 24 : time =  Math.abs(new Date().getUTCHours() - (Math.abs(hoursOffset)));
     }
 
     const morningStart = 6;
