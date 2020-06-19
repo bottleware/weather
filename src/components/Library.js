@@ -72,15 +72,27 @@ function Library() {
     setBackground(bgTimeColor());
   }, []);
 
+  useEffect(() => {
+    if (weatherData !== undefined) {
+      setBackground(bgTimeColor(weatherData.timezone));
+    }
+  }, [weatherData]);
+
 
   const clickSearch = (e) => {
     e.preventDefault();
     getWeather(weather);
   };
 
-  const bgTimeColor = () => {
-    const time = new Date().getHours();
-    // const time = 22;
+  const bgTimeColor = (searchSecondsUTCOffset) => {
+    let time;
+    const hoursOffset = (searchSecondsUTCOffset / 60) / 60;
+    if (searchSecondsUTCOffset === undefined) {
+      time = new Date().getHours()
+    } else {
+      hoursOffset >= 0 ? time = 24 % (24 - Math.abs(new Date().getUTCHours() + (Math.abs(hoursOffset)))) : time =  (24 - Math.abs(new Date().getUTCHours() - (Math.abs(hoursOffset)))) ;
+    }
+
     const morningStart = 6;
     const afternoonStart = 12;
     const eveningStart = 17;
