@@ -22,17 +22,15 @@ const Temperature = (props) => {
   const tempSymbol = (unit === true ? 'F' : 'C');
 
   return (
-    <div>
-      <div className="max-w-sm rounded overflow-hidden shadow-lg mt-5">
-        <img src={weatherIcon().icon} alt={weatherIcon().alt} />
-        <div className="px-6 pb-4">
-          <div className="font-bold text-xl mb-2">{weatherIcon().description}</div>
-          <p className="text-gray-700 text-base">
-            {kToTemp(weather.main.temp)}
-            °
-            {tempSymbol}
-          </p>
-        </div>
+    <div className="max-w-sm rounded overflow-hidden shadow-lg mt-5 bg-white">
+      <img src={weatherIcon().icon} alt={weatherIcon().alt} />
+      <div className="px-6 pb-4">
+        <div className="font-bold text-xl mb-2">{weatherIcon().description}</div>
+        <p className="text-gray-700 text-base">
+          {kToTemp(weather.main.temp)}
+          °
+          {tempSymbol}
+        </p>
       </div>
     </div>
   );

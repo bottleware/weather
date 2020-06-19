@@ -3,12 +3,18 @@ import SearchForm from './SearchForm';
 import WeatherDisplay from './WeatherDisplay';
 import key from '../key';
 
+import morning from '../assets/morning.webp';
+import afternoon from '../assets/afternoon.webp';
+import evening from '../assets/evening.webp';
+import night from '../assets/night.webp';
+
 function Library() {
   const [weatherData, setWeatherData] = useState();
   const [city, setCity] = useState();
   const [state, setState] = useState();
   const [country, setCountry] = useState();
   const [tempUnit, setTempUnit] = useState(false);
+  const [background, setBackground] = useState(`url(${evening})`);
 
   const weather = {
     city,
@@ -16,7 +22,7 @@ function Library() {
     country,
   };
 
-  // search is an object of the form {city, state, country}
+  // @param search is of the type {city, state, country}
   const getWeather = async (search) => {
     let response;
     try {
@@ -36,7 +42,7 @@ function Library() {
     }
   };
 
-  // location is of the type {latitude, longitude}
+  // @param location is of the type {latitude, longitude}
   const getGeoWeather = async (location) => {
     let response;
     const { latitude, longitude } = location;
@@ -63,7 +69,14 @@ function Library() {
     };
 
     getCurrentLocation();
+    setBackground(bgTimeColor());
   }, []);
+
+  useEffect(() => {
+    if (weatherData !== undefined) {
+      setBackground(bgTimeColor(weatherData.timezone));
+    }
+  }, [weatherData]);
 
 
   const clickSearch = (e) => {
@@ -71,29 +84,56 @@ function Library() {
     getWeather(weather);
   };
 
+  const bgTimeColor = (searchSecondsUTCOffset) => {
+    let time;
+    const hoursOffset = (searchSecondsUTCOffset / 60) / 60;
+    if (searchSecondsUTCOffset === undefined) {
+      time = new Date().getHours()
+    } else {
+      hoursOffset >= 0 ? time = Math.abs(new Date().getUTCHours() + (Math.abs(hoursOffset))) % 24 : time =  Math.abs(new Date().getUTCHours() - (Math.abs(hoursOffset)));
+    }
+
+    const morningStart = 6;
+    const afternoonStart = 12;
+    const eveningStart = 17;
+
+    if (time < morningStart || time > eveningStart) {
+      return `url(${night})`;
+    }
+    if (time < afternoonStart) {
+      return `url(${morning})`;
+    }
+    if (time < eveningStart) {
+    return `url(${afternoon})`;
+    }
+    return `url(${evening})`;
+  };
+
   return (
-    <div className="App ml-5">
-      <div
-        id="header"
-        className="flex justify-start"
-      >
-        <SearchForm
-          setCity={setCity}
-          setState={setState}
-          setCountry={setCountry}
-          search={clickSearch}
-        />
-        <div className="inline-flex">
-          <button
-            type="button"
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
-            onClick={() => setTempUnit(!tempUnit)}
-          >
-            {tempUnit ? '°F' : '°C'}
-          </button>
+    <div className='App w-full h-full bg-cover' style={{backgroundImage: background}}>
+      <div className='mx-1'>
+        <div
+          id="header"
+          className="flex justify-start"
+        >
+          <SearchForm
+            setCity={setCity}
+            setState={setState}
+            setCountry={setCountry}
+            search={clickSearch}
+          />
+          <div className="inline-flex">
+            <button
+              type="button"
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+              onClick={() => setTempUnit(!tempUnit)}
+            >
+              {tempUnit ? '°F' : '°C'}
+            </button>
+          </div>
         </div>
+        <WeatherDisplay weather={weatherData} unit={tempUnit} />
       </div>
-      <WeatherDisplay weather={weatherData} unit={tempUnit} />
     </div>
   );
 }
