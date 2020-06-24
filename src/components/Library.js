@@ -1,26 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import SearchForm from './SearchForm';
 import WeatherDisplay from './WeatherDisplay';
-import key from '../key';
+import WeatherAlertDisplay from './WeatherAlertDisplay';
+import Message from './Message';
+import keys from '../key';
 
 import morning from '../assets/morning.webp';
 import afternoon from '../assets/afternoon.webp';
 import evening from '../assets/evening.webp';
 import night from '../assets/night.webp';
 
-function Library() {
+const Library = () => {
   const [weatherData, setWeatherData] = useState();
-  const [city, setCity] = useState();
-  const [state, setState] = useState();
-  const [country, setCountry] = useState();
   const [tempUnit, setTempUnit] = useState(false);
   const [background, setBackground] = useState(`url(${evening})`);
-
-  const weather = {
-    city,
-    state,
-    country,
-  };
+  const [weatherAlerts, setWeatherAlerts] = useState({});
+  const {openweatherKey, weatherbitKey} = keys;
 
   // @param search is of the type {city, state, country}
   const getWeather = async (search) => {
@@ -29,14 +24,34 @@ function Library() {
       if (search.city === '') {
         throw new Error('Need a city..');
       } else if (search.state && search.country) {
-        response = await fetch(`/data/2.5/weather?q=${search.city},${search.state},${search.country}&appid=${key}`);
+        response = await fetch(`/data/2.5/weather?q=${search.city},${search.state},${search.country}&appid=${openweatherKey}`);
       } else if (search.state) {
-        response = await fetch(`/data/2.5/weather?q=${search.city},${search.state}&appid=${key}`);
+        response = await fetch(`/data/2.5/weather?q=${search.city},${search.state}&appid=${openweatherKey}`);
       } else {
-        response = await fetch(`/data/2.5/weather?q=${search.city}&appid=${key}`);
+        response = await fetch(`/data/2.5/weather?q=${search.city}&appid=${openweatherKey}`);
       }
 
       setWeatherData(await response.json());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+// @param search is of the type {city, state, country}
+  const getWeatherAlerts = async (search) => {
+    let response;
+    try {
+      if (search.city === '') {
+        throw new Error('Need a city..');
+      } else if (search.state && search.country) {
+        response = await fetch(`https://api.weatherbit.io/v2.0/alerts?city=${search.city}&state=${search.state}&country=${search.country}&key=${weatherbitKey}`);
+      } else if (search.state) {
+        response = await fetch(`https://api.weatherbit.io/v2.0/alerts?city=${search.city}&state=${search.state}&key=${weatherbitKey}`);
+      } else {
+        response = await fetch(`https://api.weatherbit.io/v2.0/alerts?city=${search.city}&key=${weatherbitKey}`);
+      }
+
+      setWeatherAlerts(await response.json());
     } catch (error) {
       console.log(error);
     }
@@ -48,9 +63,23 @@ function Library() {
     const { latitude, longitude } = location;
     try {
       if (latitude && longitude) {
-        response = await fetch(`/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`);
+        response = await fetch(`/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${openweatherKey}`);
       }
       setWeatherData(await response.json());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // @param location is of the type {latitude, longitude}
+  const getGeoWeatherAlerts = async (location) => {
+    let response;
+    const { latitude, longitude } = location;
+    try {
+      if (latitude && longitude) {
+        response = await fetch(`https://api.weatherbit.io/v2.0/alerts?lat=${latitude}&lon=${longitude}&key=${weatherbitKey}`);
+      }
+      setWeatherAlerts(await response.json());
     } catch (error) {
       console.log(error);
     }
@@ -60,6 +89,7 @@ function Library() {
     const setPosition = (pos) => {
       const { latitude, longitude } = pos.coords;
       getGeoWeather({ latitude, longitude });
+      getGeoWeatherAlerts({latitude, longitude});
     };
 
     const getCurrentLocation = () => {
@@ -79,9 +109,10 @@ function Library() {
   }, [weatherData]);
 
 
-  const clickSearch = (e) => {
+  const clickSearch = (e, weather) => {
     e.preventDefault();
     getWeather(weather);
+    getWeatherAlerts(weather);
   };
 
   const bgTimeColor = (searchSecondsUTCOffset) => {
@@ -116,12 +147,7 @@ function Library() {
           id="header"
           className="flex justify-start"
         >
-          <SearchForm
-            setCity={setCity}
-            setState={setState}
-            setCountry={setCountry}
-            search={clickSearch}
-          />
+          <SearchForm search={clickSearch} />
           <div className="inline-flex">
             <button
               type="button"
@@ -133,6 +159,9 @@ function Library() {
           </div>
         </div>
         <WeatherDisplay weather={weatherData} unit={tempUnit} />
+        {weatherAlerts.alerts ?
+          <WeatherAlertDisplay alerts={weatherAlerts}/>
+        : <Message message="No alerts to display..."/>}
       </div>
     </div>
   );
