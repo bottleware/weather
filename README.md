@@ -1,23 +1,33 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# weather app
+This web application is designed to be a modern-looking source to find weather info. without all the extraneous information.
 
-## Available Scripts
+## technology used
+<b>Built with:</b>
+<ul>
+  <li><a target="_blank" href="https://create-react-app.dev/">Create React App</a></li>
+  <li><a target="_blank" href="https://tailwindcss.com/">tailwindcss</a></li>
+  <li>Hosted on <a target="_blank" href="https://www.netlify.com/">Netlify</a></li>
+</ul>
 
-In the project directory, you can run:
+## installation
+<ol>
+  <li>Clone the repository.</li>
+  <li>Run <code>npm install</code> to install dependencies</li>
+</ol>
+
+## code style
+The code style follows the [airbnb](https://github.com/airbnb/javascript) Javascript style guide.
+
+## npm scripts
 
 ### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Runs the app in the development mode at [http://localhost:3000](http://localhost:3000).<br />
 
 ### `npm run build`
-
 Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+
+### `npm run lint:all`
+The linter displays all of the components' linting errors/warnings.
+
+### `npm run lint:fix`
+The linter attemps to fix all of the components' linting errors/warnings.
