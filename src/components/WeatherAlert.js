@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 const WeatherAlert = (props) => {
     const {alert} = props;
     const [collapsed, setCollapsed] = useState(true);
-    console.log("loaded a weather alert");
 
     return (
         <div className="w-full rounded overflow-hidden shadow-lg mt-5 bg-white">
