@@ -3,6 +3,8 @@ import WeatherAlert from './WeatherAlert';
 import Message from './Message';
 
 const WeatherAlertDisplay = (props) => {
+    console.log("loaded display for alerts");
+    console.log(props);
     return (
         <div>
             {(props.alerts.alerts !== []) ?
