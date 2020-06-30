@@ -31,3 +31,6 @@ The linter displays all of the components' linting errors/warnings.
 
 ### `npm run lint:fix`
 The linter attemps to fix all of the components' linting errors/warnings.
+
+### `npm run docs`
+Builds the JSDocs to the `docs` folder. Open `docs/index.html` after running the previous command to view the docs.
