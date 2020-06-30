@@ -100,6 +100,7 @@ const Library = () => {
 
     getCurrentLocation();
     setBackground(bgTimeColor());
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
