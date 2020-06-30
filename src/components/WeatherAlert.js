@@ -6,8 +6,8 @@ const WeatherAlert = (props) => {
 
     return (
         <div className="w-full rounded overflow-hidden shadow-lg mt-5 bg-white">
-            <div className="flex my-2 ml-1">
-                <h4>{alert.title}</h4>
+            <div className="flex my-2 mx-1">
+                <h4 className="max-w-2xl">{alert.title}</h4>
                 <button className="ml-3" onClick={() => setCollapsed(!collapsed)}>{collapsed ? 'EXPAND' : 'COLLAPSE'}</button>
             </div>
             {!collapsed && 

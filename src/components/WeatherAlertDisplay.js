@@ -4,7 +4,7 @@ import Message from './Message';
 
 const WeatherAlertDisplay = (props) => {
     return (
-        <div>
+        <div className="mt-1 rounded">
             {(props.alerts.alerts !== []) ?
                 props.alerts.alerts.map((alert, index) => (
                     <WeatherAlert alert={alert} key={index}/>

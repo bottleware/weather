@@ -141,7 +141,7 @@ const Library = () => {
   };
 
   return (
-    <div className='App w-full h-full bg-cover' style={{backgroundImage: background}}>
+    <div className='App w-full overflow-y-auto h-full' style={{backgroundImage: background}}>
       <div className='mx-1'>
         <div
           id="header"

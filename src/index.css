@@ -449,10 +449,6 @@ img {
   background-color: rgba(255, 255, 255, var(--bg-opacity));
 }
 
-.bg-cover {
-  background-size: cover;
-}
-
 .border-gray-200 {
   --border-opacity: 1;
   border-color: #edf2f7;
@@ -509,6 +505,10 @@ img {
   margin-bottom: 0.5rem;
 }
 
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
 .ml-1 {
   margin-left: 0.25rem;
 }
@@ -537,12 +537,20 @@ img {
   max-width: 24rem;
 }
 
+.max-w-2xl {
+  max-width: 42rem;
+}
+
 .focus\:outline-none:focus {
   outline: 0;
 }
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
 }
 
 .py-2 {
