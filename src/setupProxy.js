@@ -6,6 +6,12 @@ module.exports = function(app) {
             target: "https://api.openweathermap.org",
             changeOrigin: true,
             secure: true
+        })),
+    app.use(
+        "/v2.0", createProxyMiddleware({
+            target: "https://api.weatherbit.io",
+            changeOrigin: true,
+            secure: true
         })
     )
 };

@@ -44,11 +44,11 @@ const Library = () => {
       if (search.city === '') {
         throw new Error('Need a city..');
       } else if (search.state && search.country) {
-        response = await fetch(`https://api.weatherbit.io/v2.0/alerts?city=${search.city}&state=${search.state}&country=${search.country}&key=${weatherbitKey}`);
+        response = await fetch(`/v2.0/alerts?city=${search.city}&state=${search.state}&country=${search.country}&key=${weatherbitKey}`);
       } else if (search.state) {
-        response = await fetch(`https://api.weatherbit.io/v2.0/alerts?city=${search.city}&state=${search.state}&key=${weatherbitKey}`);
+        response = await fetch(`/v2.0/alerts?city=${search.city}&state=${search.state}&key=${weatherbitKey}`);
       } else {
-        response = await fetch(`https://api.weatherbit.io/v2.0/alerts?city=${search.city}&key=${weatherbitKey}`);
+        response = await fetch(`/v2.0/alerts?city=${search.city}&key=${weatherbitKey}`);
       }
 
       setWeatherAlerts(await response.json());
@@ -77,7 +77,7 @@ const Library = () => {
     const { latitude, longitude } = location;
     try {
       if (latitude && longitude) {
-        response = await fetch(`https://api.weatherbit.io/v2.0/alerts?lat=${latitude}&lon=${longitude}&key=${weatherbitKey}`);
+        response = await fetch(`/v2.0/alerts?lat=${latitude}&lon=${longitude}&key=${weatherbitKey}`);
       }
       setWeatherAlerts(await response.json());
     } catch (error) {
@@ -142,7 +142,7 @@ const Library = () => {
   };
 
   return (
-    <div className='App w-full overflow-y-auto h-full' style={{backgroundImage: background}}>
+    <div className='App w-full overflow-y-auto bg-cover h-full' style={{backgroundImage: background}}>
       <div className='mx-1'>
         <div
           id="header"
