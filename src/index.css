@@ -449,6 +449,10 @@ img {
   background-color: rgba(255, 255, 255, var(--bg-opacity));
 }
 
+.bg-cover {
+  background-size: cover;
+}
+
 .border-gray-200 {
   --border-opacity: 1;
   border-color: #edf2f7;
