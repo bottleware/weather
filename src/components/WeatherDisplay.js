@@ -4,7 +4,7 @@ import Temperature from './Temperature';
 import Message from './Message';
 
  /**
- * Creates the WeatherDisplay component. This component displays the current weather's data.
+ * Determines whether to display weather data if the location was valid or exists, or a message if not.
  * @component
  * @param {object} props
  * @param {object} props.weather weather data from the openweather API

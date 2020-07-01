@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
  /**
- * Creates the Message component.
+ * A component that displays a message.
  * @component
  * @param {object} props
  * @param {string} props.message a message to display

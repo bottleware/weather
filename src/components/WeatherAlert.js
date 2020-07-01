@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
  /**
- * Creates the WeatherAlert component. This component displays a single weather alert from the weatherbit API.
+ * Displays a single weather alert from the weatherbit API.
  * @component
  * @param {object} props
  * @param {number} props.key a unique key number for each alert
@@ -10,10 +10,6 @@ import React, {useState} from 'react';
 const WeatherAlert = (props) => {
     const {alert} = props;
 
-    /**
-     * determines whether to display the full alert or not
-     * @type {boolean}
-     */
     const [collapsed, setCollapsed] = useState(true);
 
     return (

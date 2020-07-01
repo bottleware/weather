@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
  /**
- * Creates the Temperature component.
+ * Displays weather information about a location.
  * @component
- * @namespace Temperature
  * @param {object} props
  * @param {boolean} props.unit true/false to display Celsius or Fahrenheit
  * @param {object} props.weather the weatherData from the Library component
@@ -35,6 +34,11 @@ const Temperature = (props) => {
     return { icon, description, alt };
   };
 
+  /**
+   * @typedef {string} tempSymbol
+   * @memberof Temperature
+   * This is a string.
+   */
   const tempSymbol = (unit === true ? 'F' : 'C');
 
   return (
