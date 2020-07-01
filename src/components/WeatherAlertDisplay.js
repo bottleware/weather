@@ -2,6 +2,7 @@
 import React from 'react';
 import WeatherAlert from './WeatherAlert';
 import Message from './Message';
+import PropTypes from 'prop-types';
 
  /**
  * Displays all of the weather alerts from the weatherbit API by making each alert into its own WeatherAlert component.
@@ -21,5 +22,9 @@ const WeatherAlertDisplay = (props) => {
         </div>
     );
 };
+
+WeatherAlertDisplay.propTypes = {
+    alerts: PropTypes.object
+}
 
 export default WeatherAlertDisplay;
