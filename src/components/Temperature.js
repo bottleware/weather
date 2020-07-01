@@ -4,10 +4,18 @@ import PropTypes from 'prop-types';
  /**
  * Creates the Temperature component.
  * @component
+ * @param {object} props
+ * @param {boolean} props.unit true/false to display Celsius or Fahrenheit
+ * @param {object} props.weather the weatherData from the Library component
  */
 const Temperature = (props) => {
   const { unit, weather } = props;
 
+  /**
+   * Converts Kelvin to the unit determined from the props.
+   * @param {number} kelvinTemp 
+   * @return {number} returns the converted temperature
+   */
   const kToTemp = (kelvinTemp) => {
     if (unit === true) {
       return Math.round(((kelvinTemp - 273.15) * (9 / 5)) + 32);
@@ -15,7 +23,10 @@ const Temperature = (props) => {
     return Math.round(kelvinTemp - 273.15);
   };
 
-  // Determines & returns the weather icon
+  /**
+   * Gets the weather icon from props.weather.
+   * @return {object} {icon link, weather description, weather alt text}
+   */
   const weatherIcon = () => {
     const icon = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
     const alt = `weather icon ${weather.weather[0].icon}`;

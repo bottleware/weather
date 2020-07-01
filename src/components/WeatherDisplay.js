@@ -7,6 +7,8 @@ import Message from './Message';
  * Creates the WeatherDisplay component. This component displays the current weather's data.
  * @component
  * @param {object} props
+ * @param {object} props.weather weather data from the openweather API
+ * @param {boolean} props.unit determines whether to display in Celsius or Fahrenheit
  */
 const WeatherDisplay = (props) => {
   const { weather, unit } = props;

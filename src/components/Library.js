@@ -22,8 +22,11 @@ const Library = () => {
   const {openweatherKey, weatherbitKey} = keys;
 
   /**
-   * Make a call to the openweather API based on the input fields. Sets weatherData's state based on the result.rest 
-   * @param {object} search {city, state, country} from the input fields
+   * Make a call to the openweather API based on the input fields. Sets weatherData's state based on the result.
+   * @param {object} search {city, state, country}
+   * @param {string} search.city from the city input field
+   * @param {string} search.state from the state input field
+   * @param {string} search.country from the country input field
    */
   const getWeather = async (search) => {
     let response;
@@ -46,7 +49,10 @@ const Library = () => {
 
 /**
  * Makes a call to weatherbit's API to get weather alerts based on the location searched. Sets weatherAlert's state based on the result.
- * @param {object} search {city, state, country} from the input fields
+ * @param {object} search {city, state, country}
+ * @param {string} search.city from the city input field
+ * @param {string} search.state from the state input field
+ * @param {string} search.country from the country input fields
  */
   const getWeatherAlerts = async (search) => {
     let response;
@@ -70,6 +76,8 @@ const Library = () => {
   /**
    * Makes a call to openweather's API based on geolocation.
    * @param {object} location {latitude, longtitude}
+   * @param {number} location.latitude
+   * @param {number} location.longitude
    */
   const getGeoWeather = async (location) => {
     let response;
@@ -87,6 +95,8 @@ const Library = () => {
   /**
    * Makes a call to weatherbit's API to get weather alerts based on geolocation. Sets weatherAlert's state based on the result.
    * @param {object} location {latitude, longtitude}
+   * @param {number} location.latitude
+   * @param {number} location.longitude
    */
   const getGeoWeatherAlerts = async (location) => {
     let response;
@@ -134,6 +144,14 @@ useEffect(() => {
   }, [weatherData]);
 
 
+  /**
+   * Fired when the search button is pressed. Gets the weather & weather alerts based on the weather parameter.
+   * @param {object} weather from the input fields
+   * @param {string} weather.city
+   * @param {string} weather.state
+   * @param {string} weather.country
+   * @returns {void}
+   */
   const clickSearch = (e, weather) => {
     e.preventDefault();
     getWeather(weather);
