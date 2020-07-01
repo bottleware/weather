@@ -1,3 +1,4 @@
+// @ts-check
 import React, { useState, useEffect } from 'react';
 import SearchForm from './SearchForm';
 import WeatherDisplay from './WeatherDisplay';
@@ -137,6 +138,7 @@ useEffect(() => {
    */
   useEffect(() => {
     if (weatherData !== undefined) {
+      // @ts-ignore
       setBackground(bgTimeColor(weatherData.timezone));
     }
   }, [weatherData]);
@@ -157,10 +159,10 @@ useEffect(() => {
   };
 
   /**
-   * Based on a location's UTC Offset, convert that to the 24-hour clock. Sets the background based on the result for the time of day.
+   * Based on a location's UTC Offset, convert that to the 24-hour clock. If no time is passed in, use the user's location. Sets the background based on the result for the time of day.
    * @param {number} searchSecondsUTCOffset weatherData.timezone
    */
-  const bgTimeColor = (searchSecondsUTCOffset) => {
+  const bgTimeColor = (searchSecondsUTCOffset = undefined) => {
     let time;
     const hoursOffset = (searchSecondsUTCOffset / 60) / 60;
     if (searchSecondsUTCOffset === undefined) {
@@ -204,6 +206,7 @@ useEffect(() => {
           </div>
         </div>
         <WeatherDisplay weather={weatherData} unit={tempUnit} />
+        {/* @ts-ignore */}
         {weatherAlerts.alerts ?
           <WeatherAlertDisplay alerts={weatherAlerts}/>
         : <Message message="No alerts to display..."/>}

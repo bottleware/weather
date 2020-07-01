@@ -1,3 +1,4 @@
+// @ts-check
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 
@@ -8,9 +9,9 @@ import PropTypes from 'prop-types';
  * @param {Function} props.search searches for a location based on the inputs' current state
  */ 
 const SearchForm = (props) => {
-  const [city, setCity] = useState();
-  const [state, setState] = useState();
-  const [country, setCountry] = useState();
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [country, setCountry] = useState("");
   const {search} = props;
 
 

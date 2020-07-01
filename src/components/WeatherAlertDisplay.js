@@ -1,3 +1,4 @@
+// @ts-check
 import React from 'react';
 import WeatherAlert from './WeatherAlert';
 import Message from './Message';
