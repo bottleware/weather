@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
  /**
  * Creates the Temperature component.
  * @component
+ * @namespace Temperature
  * @param {object} props
  * @param {boolean} props.unit true/false to display Celsius or Fahrenheit
  * @param {object} props.weather the weatherData from the Library component
