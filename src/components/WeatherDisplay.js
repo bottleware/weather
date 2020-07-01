@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 import Temperature from './Temperature';
 import Message from './Message';
 
+ /**
+ * Determines whether to display weather data if the location was valid or exists, or a message if not.
+ * @component
+ * @param {object} props
+ * @param {object} props.weather weather data from the openweather API
+ * @param {boolean} props.unit determines whether to display in Celsius or Fahrenheit
+ */
 const WeatherDisplay = (props) => {
   const { weather, unit } = props;
 

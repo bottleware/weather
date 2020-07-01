@@ -10,6 +10,10 @@ import afternoon from '../assets/afternoon.webp';
 import evening from '../assets/evening.webp';
 import night from '../assets/night.webp';
 
+/**
+ * This component is the main component that all the others are rendered in.
+ * @component
+ */
 const Library = () => {
   const [weatherData, setWeatherData] = useState();
   const [tempUnit, setTempUnit] = useState(false);
@@ -17,7 +21,13 @@ const Library = () => {
   const [weatherAlerts, setWeatherAlerts] = useState({});
   const {openweatherKey, weatherbitKey} = keys;
 
-  // @param search is of the type {city, state, country}
+  /**
+   * Make a call to the openweather API based on the input fields. Sets weatherData's state based on the result.
+   * @param {object} search {city, state, country}
+   * @param {string} search.city from the city input field
+   * @param {string} search.state from the state input field
+   * @param {string} search.country from the country input field
+   */
   const getWeather = async (search) => {
     let response;
     try {
@@ -37,7 +47,13 @@ const Library = () => {
     }
   };
 
-// @param search is of the type {city, state, country}
+/**
+ * Makes a call to weatherbit's API to get weather alerts based on the location searched. Sets weatherAlert's state based on the result.
+ * @param {object} search {city, state, country}
+ * @param {string} search.city from the city input field
+ * @param {string} search.state from the state input field
+ * @param {string} search.country from the country input fields
+ */
   const getWeatherAlerts = async (search) => {
     let response;
     try {
@@ -57,7 +73,12 @@ const Library = () => {
     }
   };
 
-  // @param location is of the type {latitude, longitude}
+  /**
+   * Makes a call to openweather's API based on geolocation.
+   * @param {object} location {latitude, longtitude}
+   * @param {number} location.latitude
+   * @param {number} location.longitude
+   */
   const getGeoWeather = async (location) => {
     let response;
     const { latitude, longitude } = location;
@@ -71,7 +92,12 @@ const Library = () => {
     }
   };
 
-  // @param location is of the type {latitude, longitude}
+  /**
+   * Makes a call to weatherbit's API to get weather alerts based on geolocation. Sets weatherAlert's state based on the result.
+   * @param {object} location {latitude, longtitude}
+   * @param {number} location.latitude
+   * @param {number} location.longitude
+   */
   const getGeoWeatherAlerts = async (location) => {
     let response;
     const { latitude, longitude } = location;
@@ -85,7 +111,10 @@ const Library = () => {
     }
   };
 
-  useEffect(() => {
+  /**
+   * When the user first opens the app, this attempts to set weatherData and weatherAlerts based on their geolocation if they allow it. Only meant to run once per visit when a user first opens the page.
+   */
+useEffect(() => {
     const setPosition = (pos) => {
       const { latitude, longitude } = pos.coords;
       getGeoWeather({ latitude, longitude });
@@ -103,6 +132,9 @@ const Library = () => {
     // eslint-disable-next-line
   }, []);
 
+  /**
+   * Attempts to update the background image whenever weatherData is changed by getting the time from the new location.
+   */
   useEffect(() => {
     if (weatherData !== undefined) {
       setBackground(bgTimeColor(weatherData.timezone));
@@ -110,12 +142,24 @@ const Library = () => {
   }, [weatherData]);
 
 
+  /**
+   * Fired when the search button is pressed. Gets the weather & weather alerts based on the weather parameter.
+   * @param {object} weather from the input fields
+   * @param {string} weather.city
+   * @param {string} weather.state
+   * @param {string} weather.country
+   * @returns {void}
+   */
   const clickSearch = (e, weather) => {
     e.preventDefault();
     getWeather(weather);
     getWeatherAlerts(weather);
   };
 
+  /**
+   * Based on a location's UTC Offset, convert that to the 24-hour clock. Sets the background based on the result for the time of day.
+   * @param {number} searchSecondsUTCOffset weatherData.timezone
+   */
   const bgTimeColor = (searchSecondsUTCOffset) => {
     let time;
     const hoursOffset = (searchSecondsUTCOffset / 60) / 60;
