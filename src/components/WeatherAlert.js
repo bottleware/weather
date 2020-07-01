@@ -1,5 +1,9 @@
 import React, {useState} from 'react';
 
+ /**
+ * Creates the WeatherAlert component.
+ * @component
+ */
 const WeatherAlert = (props) => {
     const {alert} = props;
     const [collapsed, setCollapsed] = useState(true);

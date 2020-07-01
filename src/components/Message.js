@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+ /**
+ * Creates the Message component.
+ * @component
+ */
 const Message = (props) => {
   const { message } = props;
   return (

@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import Temperature from './Temperature';
 import Message from './Message';
 
+ /**
+ * Creates the WeatherDisplay component. This component displays the current weather's data.
+ * @component
+ * @param {object} props
+ */
 const WeatherDisplay = (props) => {
   const { weather, unit } = props;
 

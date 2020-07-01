@@ -2,6 +2,10 @@ import React from 'react';
 import WeatherAlert from './WeatherAlert';
 import Message from './Message';
 
+ /**
+ * Creates the WeatherAlertDisplay component.
+ * @component
+ */
 const WeatherAlertDisplay = (props) => {
     return (
         <div className="mt-1 rounded">

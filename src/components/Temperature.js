@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+ /**
+ * Creates the Temperature component.
+ * @component
+ */
 const Temperature = (props) => {
   const { unit, weather } = props;
 

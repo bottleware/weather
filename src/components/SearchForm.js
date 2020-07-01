@@ -1,6 +1,10 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 
+ /**
+ * Creates the SearchForm component.
+ * @component
+ */ 
 const SearchForm = (props) => {
   const [city, setCity] = useState();
   const [state, setState] = useState();
