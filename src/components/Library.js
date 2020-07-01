@@ -13,6 +13,7 @@ import night from '../assets/night.webp';
 /**
  * Creates the library component. This component is the main component that all the others are rendered in.
  * @component
+ * @namespace
  */
 const Library = () => {
   const [weatherData, setWeatherData] = useState();
@@ -112,7 +113,8 @@ const Library = () => {
   };
 
   /**
-   * @todo Get useEffect on the docs.
+   * @memberof Library
+   * @function useEffect
    * When the user first opens the app, this attempts to set weatherData and weatherAlerts based on their geolocation if they allow it. Only meant to run once per visit when a user first opens the page.
    */
 useEffect(() => {
@@ -134,8 +136,9 @@ useEffect(() => {
   }, []);
 
   /**
-   * @todo Get useEffect on the docs.
-   * Attempts to update the backround image whenever weatherData is changed by getting the time from the new location.
+   * @memberof Library
+   * @function useEffect
+   * Attempts to update the background image whenever weatherData is changed by getting the time from the new location.
    */
   useEffect(() => {
     if (weatherData !== undefined) {
