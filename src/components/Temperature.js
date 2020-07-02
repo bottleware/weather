@@ -35,11 +35,6 @@ const Temperature = (props) => {
     return { icon, description, alt };
   };
 
-  /**
-   * @typedef {string} tempSymbol
-   * @memberof Temperature
-   * This is a string.
-   */
   const tempSymbol = (unit === true ? 'F' : 'C');
 
   return (
