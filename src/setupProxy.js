@@ -13,5 +13,12 @@ module.exports = function(app) {
             changeOrigin: true,
             secure: true
         })
+    ),
+    app.use(
+        "/geocode", createProxyMiddleware({
+            target: "https://api.opencagedata.com",
+            changeOrigin: true,
+            secure: true
+        })
     )
 };
