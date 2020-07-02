@@ -17,34 +17,62 @@ import night from '../assets/night.webp';
  */
 const Library = () => {
   const [weatherData, setWeatherData] = useState();
+  const [geoLocation, setGeoLocation] = useState({lat: undefined, lng: undefined});
   const [tempUnit, setTempUnit] = useState(false);
   const [background, setBackground] = useState(`url(${evening})`);
   const [weatherAlerts, setWeatherAlerts] = useState({});
-  const {openweatherKey, weatherbitKey} = keys;
+  const {openweatherKey, weatherbitKey, opencage} = keys;
 
+  useEffect(() => {
+  if (!geoLocation.lat || !geoLocation.lng) return;
   /**
-   * Make a call to the openweather API based on the input fields. Sets weatherData's state based on the result.
-   * @param {object} search {city, state, country}
-   * @param {string} search.city from the city input field
-   * @param {string} search.state from the state input field
-   * @param {string} search.country from the country input field
+   * Make a call to the openweather API based on the input fields whenever geoLocation changes. Sets weatherData's state based on the result.
+   * @return {Promise}
    */
-  const getWeather = async (search) => {
+  const getWeather = async () => {
     let response;
     try {
-      if (search.city === '') {
+      if (!geoLocation || !(geoLocation.lat && geoLocation.lng)) {
         throw new Error('Need a city..');
-      } else if (search.state && search.country) {
-        response = await fetch(`/data/2.5/weather?q=${search.city},${search.state},${search.country}&appid=${openweatherKey}`);
-      } else if (search.state) {
-        response = await fetch(`/data/2.5/weather?q=${search.city},${search.state}&appid=${openweatherKey}`);
       } else {
-        response = await fetch(`/data/2.5/weather?q=${search.city}&appid=${openweatherKey}`);
+        response = await fetch(`/data/2.5/onecall?lat=${geoLocation.lat}&lon=${geoLocation.lng}&appid=${openweatherKey}`);
       }
 
       setWeatherData(await response.json());
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  getWeather();
+}, [geoLocation, openweatherKey]);
+
+  /**
+   * Converts a text location to a latitude and longtitude through the opencage API. Sets the geoLocation state as the latitude-longitutde object.
+   * @param {object} search
+   * @param {string} search.city
+   * @param {string} search.state
+   * @param {string} search.country
+   * @return {Promise}
+   * @todo add error checking
+   * @todo add a dropdown when there are multiple results returned, i.e. response.results.length > 1
+   */
+  const getGeoFromSearch = async (search) => {
+    let response;
+    try {
+      if (search.city === '') {
+        throw new Error('Need a city..');
+      } else if (search.state && search.country) {
+        response = await fetch(`/geocode/v1/json?key=${opencage}&q=${search.city}+${search.state}+${search.country}&appid=${openweatherKey}`);
+      } else if (search.state) {
+        response = await fetch(`/geocode/v1/json?key=${opencage}&q=${search.city}+${search.state}&appid=${openweatherKey}`);
+      } else {
+        response = await fetch(`/geocode/v1/json?key=${opencage}&q=${search.city}&appid=${openweatherKey}`);
+      }
+
+      let resJson = await response.json();
+      setGeoLocation(await resJson.results[0].geometry);
+    } catch (error) {
     }
   };
 
@@ -54,6 +82,7 @@ const Library = () => {
  * @param {string} search.city from the city input field
  * @param {string} search.state from the state input field
  * @param {string} search.country from the country input fields
+ * @todo add error checking
  */
   const getWeatherAlerts = async (search) => {
     let response;
@@ -70,7 +99,6 @@ const Library = () => {
 
       setWeatherAlerts(await response.json());
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -139,7 +167,7 @@ useEffect(() => {
   useEffect(() => {
     if (weatherData !== undefined) {
       // @ts-ignore
-      setBackground(bgTimeColor(weatherData.timezone));
+      setBackground(bgTimeColor(weatherData.timezone_offset));
     }
   }, [weatherData]);
 
@@ -154,13 +182,13 @@ useEffect(() => {
    */
   const clickSearch = (e, weather) => {
     e.preventDefault();
-    getWeather(weather);
+    getGeoFromSearch(weather);
     getWeatherAlerts(weather);
   };
 
   /**
    * Based on a location's UTC Offset, convert that to the 24-hour clock. If no time is passed in, use the user's location. Sets the background based on the result for the time of day.
-   * @param {number} searchSecondsUTCOffset weatherData.timezone
+   * @param {number} searchSecondsUTCOffset weatherData.timezone_offset
    */
   const bgTimeColor = (searchSecondsUTCOffset = undefined) => {
     let time;
@@ -205,7 +233,10 @@ useEffect(() => {
             </button>
           </div>
         </div>
+        {weatherData ?
         <WeatherDisplay weather={weatherData} unit={tempUnit} />
+        :
+        <Message message="Enter a city to see today's weather." /> }
         {/* @ts-ignore */}
         {weatherAlerts.alerts ?
           <WeatherAlertDisplay alerts={weatherAlerts}/>

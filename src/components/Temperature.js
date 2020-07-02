@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
  * @param {object} props
  * @param {boolean} props.unit true/false to display Celsius or Fahrenheit
  * @param {object} props.weather the weatherData from the Library component
+ * @todo update to match new API
  */
 const Temperature = (props) => {
   const { unit, weather } = props;
@@ -29,9 +30,9 @@ const Temperature = (props) => {
    * @return {object} {icon link, weather description, weather alt text}
    */
   const weatherIcon = () => {
-    const icon = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
-    const alt = `weather icon ${weather.weather[0].icon}`;
-    const { description } = weather.weather[0];
+    const icon = `https://openweathermap.org/img/wn/${weather.current.weather[0].icon}@2x.png`;
+    const alt = `weather icon ${weather.current.weather[0].icon}`;
+    const { description } = weather.current.weather[0];
     return { icon, description, alt };
   };
 
@@ -43,7 +44,7 @@ const Temperature = (props) => {
       <div className="px-6 pb-4">
         <div className="font-bold text-xl mb-2">{weatherIcon().description}</div>
         <p className="text-gray-700 text-base">
-          {kToTemp(weather.main.temp)}
+          {kToTemp(weather.current.temp)}
           °
           {tempSymbol}
         </p>
