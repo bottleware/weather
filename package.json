@@ -51,6 +51,7 @@
     "eslint-plugin-react-hooks": "^2.5.1",
     "http-proxy-middleware": "^1.0.4",
     "jsdoc": "^3.6.4",
+    "parcel": "^1.12.4",
     "postcss-cli": "^7.1.1",
     "tailwindcss": "^1.4.6"
   }
