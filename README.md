@@ -30,4 +30,4 @@ Builds the app for production to the `build` folder.<br />
 The linter displays all of the components' linting errors/warnings.
 
 ### `npm run lint:fix`
-The linter attemps to fix all of the components' linting errors/warnings.
+The linter attempts to fix all of the components' linting errors/warnings.
